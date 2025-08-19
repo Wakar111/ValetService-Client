@@ -8,10 +8,10 @@ export default defineConfig({
     exclude: ['lucide-react'],
   },
   server: {
-    allowedHosts: ['*'],
+    allowedHosts: process.env.VITE_ALLOWED_HOST ? [process.env.VITE_ALLOWED_HOST] : ['*'],
     host: '0.0.0.0',
   },
   preview: {
-    allowedHosts: ['*']
+    allowedHosts: process.env.VITE_ALLOWED_HOST ? [process.env.VITE_ALLOWED_HOST] : ['*']
   }
 });
