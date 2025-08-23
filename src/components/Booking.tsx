@@ -7,11 +7,24 @@ import { de } from 'date-fns/locale';
 
 const Booking = () => {
   const services = [
-    { name: 'Fahrzeugreinigung innen PKW', price: '€59' },
-    { name: 'Fahrzeugreinigung innen SUV/BUSSE', price: '€89' },
-    { name: 'Fahrzeugreinigung außen', price: '€29' },
-    { name: 'Tankservice', price: '€20 zzgl. Spritpreis' },
-    { name: 'E-WALLBOX', price: '€20 zzgl. Strompreis' }
+    { name: 'Auto Außenwäsche', price: 29 },
+    { name: 'Auto Innenwäsche', price: 55 },
+    { name: 'Auto Innenwäsche Bus/SUV', price: 80 },
+    { name: 'Tankservice', price: 20 },
+    { name: 'E-WALLBOX', price: 40 }
+  ];
+
+  const parkingPrices = [
+    { days: 1, price: 48 }, { days: 2, price: 50 }, { days: 3, price: 53 },
+    { days: 4, price: 58 }, { days: 5, price: 61 }, { days: 6, price: 66 },
+    { days: 7, price: 75 }, { days: 8, price: 78 }, { days: 9, price: 80 },
+    { days: 10, price: 83 }, { days: 11, price: 86 }, { days: 12, price: 90 },
+    { days: 13, price: 94 }, { days: 14, price: 110 }, { days: 15, price: 114 },
+    { days: 16, price: 115 }, { days: 17, price: 119 }, { days: 18, price: 123 },
+    { days: 19, price: 126 }, { days: 20, price: 130 }, { days: 21, price: 134 },
+    { days: 22, price: 137 }, { days: 23, price: 140 }, { days: 24, price: 148 },
+    { days: 25, price: 151 }, { days: 26, price: 154 }, { days: 27, price: 160 },
+    { days: 28, price: 163 }, { days: 29, price: 170 }, { days: 30, price: 176 },
   ];
 
   const [isServicesExpanded, setIsServicesExpanded] = useState(false);
@@ -291,8 +304,7 @@ const Booking = () => {
                 </div>
 
               </div>
-            </div>
-            
+            </div>                    
             {/* Zusätzliche Services */}
             <div className="space-y-4">
               <button
@@ -327,8 +339,79 @@ const Booking = () => {
                 </div>
               )}
             </div>
-            
-            <div className="text-center">
+
+            {/* Preisberechnung */}
+            {formData.departureDateTime && formData.returnDateTime && (
+              <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Preisübersicht</h3>
+                {(() => {
+                  const days = Math.ceil(
+                    (formData.returnDateTime.getTime() - formData.departureDateTime.getTime()) / (1000 * 60 * 60 * 24)
+                  );
+                  
+                  // Find parking price for the number of days
+                  const parkingPrice = days <= 30
+                    ? parkingPrices.find(p => p.days === days)?.price
+                    : null;
+
+                  // Calculate additional services total
+                  const additionalServicesTotal = formData.additionalServices.reduce((total, serviceName) => {
+                    const service = services.find(s => s.name === serviceName);
+                    return total + (service?.price || 0);
+                  }, 0);
+
+                  return (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span className="text-gray-600">Parkdauer:</span>
+                        <span className="font-medium">{days} {days === 1 ? 'Tag' : 'Tage'}</span>
+                      </div>
+                      
+                      {parkingPrice ? (
+                        <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                          <span className="text-gray-600">Parkgebühr:</span>
+                          <span className="font-medium">{parkingPrice} €</span>
+                        </div>
+                      ) : (
+                        <div className="text-gray-600 italic">
+                          * Für Buchungen über 30 Tage kontaktieren Sie uns bitte für ein individuelles Angebot
+                        </div>
+                      )}
+
+                      {formData.additionalServices.length > 0 && (
+                        <>
+                          <div className="pt-2">
+                            <h4 className="font-medium text-gray-900 mb-2">Zusätzliche Leistungen:</h4>
+                            {formData.additionalServices.map(serviceName => {
+                              const service = services.find(s => s.name === serviceName);
+                              return (
+                                <div key={serviceName} className="flex justify-between items-center py-1">
+                                  <span className="text-gray-600">{serviceName}</span>
+                                  <span className="font-medium">{service?.price} €</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-t border-gray-200">
+                            <span className="text-gray-600">Zusatzleistungen Gesamt:</span>
+                            <span className="font-medium">{additionalServicesTotal} €</span>
+                          </div>
+                        </>
+                      )}
+
+                      {parkingPrice && (
+                        <div className="flex justify-between items-center py-3 border-t-2 border-gray-300 text-lg font-semibold">
+                          <span>Gesamtpreis:</span>
+                          <span>{parkingPrice + additionalServicesTotal} €</span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+
+            <div className="text-center mt-8">
               <button
                 type="submit"
                 className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg"

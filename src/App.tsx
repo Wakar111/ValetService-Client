@@ -1,26 +1,23 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Booking from './components/Booking';
-import Contact from './components/Contact';
-import Ratings from './components/Ratings';
 import Footer from './components/Footer';
+import Home from './pages/Home';
+import Prices from './pages/Prices';
+import Contact from './pages/Contact';
 
 function App() {
-  // Check if ratings should be displayed
-  const showRatings = import.meta.env.VITE_SHOW_RATINGS === 'true';
-
   return (
-    <div className="min-h-screen">
-      <Header />
-      <Hero />
-      <Services />
-      <Booking />
-      <Contact />
-      {showRatings && <Ratings />}
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/prices" element={<Prices />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 

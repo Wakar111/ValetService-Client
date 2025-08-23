@@ -40,8 +40,18 @@ const Services = () => {
       features: ["Außenwäsche und -pflege", "Innenraumreinigung und -pflege"],
       details: [
         {
+          title: "Außenreinigung PKW/SUV/BUSSE",
+          price: "€29",
+          items: [
+            "Intensivschaum Hochdruckvorwäsche",
+            "Felgenwäsche mit Intensivschaum",
+            "Brillant-Konservierung",
+            "Trocknen"
+          ]
+        },
+        {
           title: "Innenreinigung PKW",
-          price: "€59",
+          price: "€55",
           items: [
             "Aussaugen inkl. Kofferraum",
             "Reinigung der Türinnen, Seiten und Zwischenräume",
@@ -51,22 +61,12 @@ const Services = () => {
         },
         {
           title: "Innenreinigung SUV/BUSSE",
-          price: "€89",
+          price: "€80",
           items: [
             "Aussaugen inkl. Kofferraum",
             "Reinigung der Türinnenseiten und Zwischenräume",
             "Armaturenreinigung und Pflege (inkl. Cockpit)",
             "Scheibenreinigung (innen und außen)"
-          ]
-        },
-        {
-          title: "Außenreinigung PKW/SUV/BUSSE",
-          price: "€29",
-          items: [
-            "Intensivschaum Hochdruckvorwäsche",
-            "Felgenwäsche mit Intensivschaum",
-            "Brillant-Konservierung",
-            "Trocknen"
           ]
         }
       ]
@@ -79,7 +79,7 @@ const Services = () => {
       details: [
         {
           title: "E-WALLBOX",
-          price: "€20 zzgl. Strompreis",
+          price: "€40 zzgl. Strompreis",
           items: [
             "Professionelles Aufladen Ihres E-Autos",
             "Aufgeladenes Fahrzeug bei Ihrer Rückkehr",
@@ -130,13 +130,13 @@ const Services = () => {
     {
       icon: MapPin,
       title: "Optimale Lage",
-      description: "Nur 13km vom Frankfurter Flughafen entfernt",
+      description: "Nur 10min vom Frankfurter Flughafen entfernt",
       features: ["Schnelle Erreichbarkeit", "Sicherer und überwachter Parkplatz"],
       details: [{
         title: "Standort Details",
         items: [
-          "Adresse: Düsseldorfer str 12 - Eschborn",
-          "Nur 15-20 Minuten Fahrzeit zum Frankfurter Flughafen",
+          "Adresse: Düsseldorfer Str. 12 - Eschborn",
+          "Nur 10-15 Minuten Fahrzeit zum Frankfurter Flughafen",
           "24/7 videoüberwachter Parkplatz",
           "Optimale Verkehrsanbindung"
         ]
@@ -145,7 +145,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-16 bg-white">
+    <section id="services" className="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

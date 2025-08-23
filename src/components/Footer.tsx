@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <Car className="h-8 w-8 text-blue-400" />
+              <img src="logo.jpeg" alt="Logo" className="h-16 w-16" />
               <div>
                 <h3 className="text-xl font-bold">Parkbereit</h3>
                 <p className="text-blue-400 font-medium">24h Valet Service</p>
