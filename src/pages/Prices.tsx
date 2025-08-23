@@ -1,4 +1,7 @@
+import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
+
 const Prices = () => {
+  const navigateAndScroll = useNavigateAndScroll();
   const parkingPrices = [
     { days: 1, price: 45 },
     { days: 2, price: 48 },
@@ -116,13 +119,30 @@ const Prices = () => {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 text-sm">
-            *  Für Buchungen über 30 Tage kontaktieren Sie uns bitte für ein individuelles Angebot
-          </p>
-          <p className="text-gray-600 text-sm">
-            * Alle Preise inkl. MwSt. Preisänderungen vorbehalten.
-          </p>
+        <div className="mt-12 text-center space-y-8">
+          <div className="space-y-2">
+            <p className="text-gray-600 text-sm">
+              *  Für Buchungen über 30 Tage kontaktieren Sie uns bitte für ein individuelles Angebot
+            </p>
+            <p className="text-gray-600 text-sm">
+              * Alle Preise inkl. MwSt. Preisänderungen vorbehalten.
+            </p>
+          </div>
+          
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={() => navigateAndScroll('/', '#services')}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Zu unseren Services
+            </button>
+            <button
+              onClick={() => navigateAndScroll('/', '#booking')}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Jetzt buchen
+            </button>
+          </div>
         </div>
       </div>
     </section>
