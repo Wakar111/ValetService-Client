@@ -400,9 +400,12 @@ const Booking = () => {
                       )}
 
                       {parkingPrice && (
-                        <div className="flex justify-between items-center py-3 border-t-2 border-gray-300 text-lg font-semibold">
-                          <span>Gesamtpreis:</span>
-                          <span>{parkingPrice + additionalServicesTotal} €</span>
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-center py-3 border-t-2 border-gray-300 text-lg font-semibold">
+                            <span>Gesamtpreis:</span>
+                            <span>{parkingPrice + additionalServicesTotal} €</span>
+                          </div>
+                          <p className="text-sm text-gray-500 text-right">* inkl. 19% MwSt.</p>
                         </div>
                       )}
                     </div>
