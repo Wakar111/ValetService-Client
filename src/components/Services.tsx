@@ -27,7 +27,7 @@ const Services = () => {
       details: [{
         title: "Standort und Transport",
         items: [
-          "30km Fahrtstrecke für Hin- und Rückfahrt zum Parkplatz",
+          "10min Fahrstrecke für Hin- und Rückfahrt zum Parkplatz",
           "Professioneller Transport durch geschulte Fahrer",
           "Vollständig versicherter Transport"
         ]
@@ -41,7 +41,7 @@ const Services = () => {
       details: [
         {
           title: "Außenreinigung PKW/SUV/BUSSE",
-          price: "€29",
+          price: "€25",
           items: [
             "Intensivschaum Hochdruckvorwäsche",
             "Felgenwäsche mit Intensivschaum",
@@ -51,17 +51,28 @@ const Services = () => {
         },
         {
           title: "Innenreinigung PKW",
-          price: "€55",
+          price: "€45",
           items: [
             "Aussaugen inkl. Kofferraum",
             "Reinigung der Türinnen, Seiten und Zwischenräume",
             "Armaturenreinigung und Pflege (inkl. Cockpit)",
-            "Scheibenreinigung (innen und außen)"
+            "Scheibenreinigung"
+          ]
+        },
+        {
+          title: "Innen- und Außenreinigung PKW",
+          price: "€60",
+          items: [
+            "Komplette Reinigungspaket für innen und außen für ihren PKW",
+            "Reinigung der Türinnen, Seiten und Zwischenräume",
+            "Armaturenreinigung und Pflege (inkl. Cockpit)",
+            "Scheibenreinigung (innen und außen)",
+            "Trocknen"
           ]
         },
         {
           title: "Innenreinigung SUV/BUSSE",
-          price: "€80",
+          price: "€70",
           items: [
             "Aussaugen inkl. Kofferraum",
             "Reinigung der Türinnenseiten und Zwischenräume",

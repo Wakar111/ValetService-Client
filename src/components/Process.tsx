@@ -5,7 +5,7 @@ const Process = () => {
     {
       icon: <Phone className="w-12 h-12 text-blue-600" />,
       title: "1. Anrufen & Treffpunkt",
-      description: "Rufen Sie uns 45 Minuten vor Ihrer Ankunft am Flughafen an. Wir vereinbaren einen Treffpunkt direkt am Terminal 1 oder 2."
+      description: "Rufen Sie uns 30 Minuten vor Ihrer Ankunft am Flughafen an. Wir vereinbaren einen Treffpunkt direkt am Terminal 1 oder 2."
     },
     {
       icon: <Calendar className="w-12 h-12 text-blue-600" />,
@@ -15,7 +15,7 @@ const Process = () => {
     {
       icon: <Car className="w-12 h-12 text-blue-600" />,
       title: "3. Übergabe & Parken",
-      description: "Nach kurzer Fahrzeuginspektion (ca. 5 Min.) übernimmt unser Fahrer Ihr Auto und parkt es sicher. Sie können direkt zum Check-In gehen."
+      description: "Nach kurzer Übergabe Protokoll (ca. 5 Min.) übernimmt unser Fahrer Ihr Auto und parkt es sicher. Sie können direkt zum Check-In gehen."
     },
     {
       icon: <Plane className="w-12 h-12 text-blue-600" />,

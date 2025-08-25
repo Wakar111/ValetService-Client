@@ -26,7 +26,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-gray-900">Telefon</h4>
                     <a href="tel:+4969123456789" className="text-blue-600 hover:text-blue-800 text-lg font-medium">
-                      +49 69 123 456 789
+                      +49 17 269 35 941
                     </a>
                     <p className="text-gray-600 text-sm">24h Hotline verfügbar</p>
                   </div>

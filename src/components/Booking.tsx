@@ -7,8 +7,9 @@ import { de } from 'date-fns/locale';
 
 const Booking = () => {
   const services = [
-    { name: 'Auto Außenwäsche', price: 29 },
-    { name: 'Auto Innenwäsche', price: 55 },
+    { name: 'Auto Außenwäsche', price: 25 },
+    { name: 'Auto Innenwäsche', price: 45 },
+    {name: 'Auto Innen- und Außenwäsche', price: 60},
     { name: 'Auto Innenwäsche Bus/SUV', price: 80 },
     { name: 'Tankservice', price: 20 },
     { name: 'E-WALLBOX', price: 40 }
@@ -119,6 +120,7 @@ const Booking = () => {
                   <input
                     type="text"
                     name="name"
+                    required
                     value={formData.name}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -134,6 +136,7 @@ const Booking = () => {
                   <input
                     type="text"
                     name="lastname"
+                    required
                     value={formData.lastname}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -149,6 +152,7 @@ const Booking = () => {
                   <input
                     type="email"
                     name="email"
+                    required
                     value={formData.email}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -164,6 +168,7 @@ const Booking = () => {
                   <input
                     type="tel"
                     name="phone"
+                    required
                     value={formData.phone}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -239,7 +244,7 @@ const Booking = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Flugnummer Abreise *
+                    Flugnummer Abreise (optional)
                   </label>
                   <input
                     type="text"
@@ -253,7 +258,7 @@ const Booking = () => {
                 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Flugnummer Ankunft *
+                    Flugnummer Ankunft (optional)
                   </label>
                   <input
                     type="text"
@@ -281,6 +286,7 @@ const Booking = () => {
                   <input
                     type="text"
                     name="licensePlate"
+                    required
                     value={formData.licensePlate}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -291,7 +297,7 @@ const Booking = () => {
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     <Car className="inline h-4 w-4 mr-1" />
-                    Fahrzeugmodell *
+                    Fahrzeugmodell (optional)
                   </label>
                   <input
                     type="text"

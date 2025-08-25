@@ -41,9 +41,10 @@ const Prices = () => {
   ];
 
   const carCareServices = [
-    { name: 'Auto Außenwäsche', price: 29 },
-    { name: 'Auto Innenwäsche', price: 55 },
-    { name: 'Auto Innenwäsche Bus/ SUV', price: 80 },
+    { name: 'Auto Außenwäsche', price: 25 },
+    { name: 'Auto Innenwäsche', price: 45 },
+    { name: 'Auto Innen- und Außenwäsche', price: 60 },
+    { name: 'Auto Innenwäsche Bus/ SUV', price: 70 },
   ];
 
   return (
