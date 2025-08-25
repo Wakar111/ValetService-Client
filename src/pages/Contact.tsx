@@ -26,7 +26,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-gray-900">Telefon</h4>
                     <a href="tel:+4969123456789" className="text-blue-600 hover:text-blue-800 text-lg font-medium">
-                      +49 17 269 35 941
+                      +49 172 6935941
                     </a>
                     <p className="text-gray-600 text-sm">24h Hotline verfügbar</p>
                   </div>
@@ -47,7 +47,7 @@ const Contact = () => {
                   <MapPin className="h-6 w-6 text-blue-600 mt-1" />
                   <div>
                     <h4 className="font-semibold text-gray-900">Standort</h4>
-                    <p className="text-gray-800">Frankfurter Flughafen</p>
+                    <p className="text-gray-800">Düsseldorfer Str. 12 - 65760 Eschborn</p>
                     <p className="text-gray-600 text-sm">Parkplatz 10min vom Terminal entfernt</p>
                   </div>
                 </div>

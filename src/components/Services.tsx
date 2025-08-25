@@ -23,11 +23,11 @@ const Services = () => {
       icon: Car,
       title: "Valet Parking Service",
       description: "Professionelle Abholung und Rückgabe Ihres Fahrzeugs direkt am Terminal",
-      features: ["30km kostenlose Fahrkilometer inklusive", "Sichere Aufbewahrung auf unserem Parkplatz"],
+      features: ["Abhol- und Lieferservice von ihrem Fahrzeug", "Sichere Aufbewahrung auf unserem Parkplatz"],
       details: [{
         title: "Standort und Transport",
         items: [
-          "10min Fahrstrecke für Hin- und Rückfahrt zum Parkplatz",
+          "10 Minuten Fahrstrecke für Hin- und Rückfahrt zum Parkplatz",
           "Professioneller Transport durch geschulte Fahrer",
           "Vollständig versicherter Transport"
         ]
@@ -141,7 +141,7 @@ const Services = () => {
     {
       icon: MapPin,
       title: "Optimale Lage",
-      description: "Nur 10min vom Frankfurter Flughafen entfernt",
+      description: "Nur 10 Minuten vom Frankfurter Flughafen entfernt",
       features: ["Schnelle Erreichbarkeit", "Sicherer und überwachter Parkplatz"],
       details: [{
         title: "Standort Details",

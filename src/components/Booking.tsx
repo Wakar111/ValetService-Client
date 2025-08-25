@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, User, Mail, Phone, Car, ChevronUp, ChevronDown } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -85,6 +86,58 @@ const Booking = () => {
     });
   };
 
+  const navigate = useNavigate();
+
+  const calculateParkingDays = () => {
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.phone || !formData.licensePlate || !formData.departureDateTime || !formData.returnDateTime) {
+      return 0;
+    }
+    const diffTime = Math.abs(formData.returnDateTime.getTime() - formData.departureDateTime.getTime());
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const calculatePrice = (days: number) => {
+    const price = parkingPrices.find(p => p.days === days)?.price;
+    if (!price && days > 30) return null; // Custom quote needed
+    return price || parkingPrices[parkingPrices.length - 1].price;
+  };
+
+  const calculateTotal = () => {
+    const parkingDays = calculateParkingDays();
+    const parkingPrice = calculatePrice(parkingDays) || 0;
+    const servicesTotal = formData.additionalServices.reduce((total, service) => 
+      total + (services.find(s => s.name === service)?.price || 0), 0
+    );
+    return parkingPrice + servicesTotal;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.departureDateTime || !formData.returnDateTime) {
+      alert('Bitte wählen Sie Abflug- und Rückflugdatum aus.');
+      return;
+    }
+
+    const parkingDays = calculateParkingDays();
+    
+    if (parkingDays === 0) {
+      alert('Bitte wählen Sie ein gültiges Start- und Enddatum');
+      return;
+    }
+
+    const bookingData = {
+      ...formData,
+      parkingDays,
+      totalPrice: calculateTotal()
+    };
+
+    window.scrollTo(0, 0);
+    navigate('/booking-overview', { state: bookingData });
+  };
+
   const handleServiceChange = (service: string) => {
     setFormData((prev: FormData) => ({
       ...prev,
@@ -107,7 +160,7 @@ const Booking = () => {
         </div>
         
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* Persönliche Daten */}
             <div className="space-y-6">
               <h3 className="text-lg font-semibold text-gray-900 border-b pb-2">Persönliche Daten</h3>
@@ -202,6 +255,7 @@ const Booking = () => {
                     maxTime={maxTime}
                     locale={de}
                     placeholderText="Datum und Zeit"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
@@ -232,6 +286,7 @@ const Booking = () => {
                     maxTime={maxTime}
                     locale={de}
                     placeholderText="Datum und Zeit"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
@@ -339,7 +394,7 @@ const Booking = () => {
                         />
                         <span className="text-gray-700">{service.name}</span>
                       </div>
-                      <span className="text-blue-600 font-semibold">{service.price}</span>
+                      <span className="text-blue-600 font-semibold">{service.price} €</span>
                     </label>
                   ))}
                 </div>

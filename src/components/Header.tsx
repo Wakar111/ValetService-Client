@@ -53,7 +53,7 @@ const Header = () => {
           <div className="flex items-center space-x-3">
             <a href="tel:+4969123456789" className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors">
               <Phone className="h-4 w-4" />
-              <span className="text-lg font-semibold hidden sm:inline">+49 17 269 35 941</span>
+              <span className="text-lg font-semibold hidden sm:inline">+49 172 6935941</span>
             </a>
             
             {/* Mobile Menu Button */}

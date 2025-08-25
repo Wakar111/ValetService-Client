@@ -30,7 +30,7 @@ const Hero = () => {
             <div className="bg-white/95 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:bg-white transition-colors duration-300 transform hover:scale-105">
               <Shield className="h-12 w-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 mb-3">70 Stellplätze</h3>
-              <p className="text-gray-600 leading-relaxed">Sicherer Parkplatz nur 10min vom Flughafen entfernt - mit Video überwacht und eingezäunt</p>
+              <p className="text-gray-600 leading-relaxed">Sicherer Parkplatz nur 10 Minuten vom Flughafen entfernt - mit Video überwacht und eingezäunt</p>
             </div>
             
             <div className="bg-white/95 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:bg-white transition-colors duration-300 transform hover:scale-105 sm:col-span-2 lg:col-span-1">
