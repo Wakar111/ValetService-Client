@@ -134,6 +134,7 @@ const Services = () => {
           "24 Stunden täglich erreichbar",
           "365 Tage im Jahr für Sie da",
           "Flexible Abholung und Rückgabe",
+          "Nachtzuschlag von 25€ - 22:00 - 06:00 Uhr",
           "Kein Aufpreis an Feiertagen"
         ]
       }]

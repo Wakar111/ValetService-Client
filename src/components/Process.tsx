@@ -8,19 +8,19 @@ const Process = () => {
       description: "Rufen Sie uns 30 Minuten vor Ihrer Ankunft am Flughafen an. Wir vereinbaren einen Treffpunkt direkt am Terminal 1 oder 2."
     },
     {
-      icon: <Calendar className="w-12 h-12 text-blue-600" />,
-      title: "2. Änderungen",
-      description: "Informieren Sie uns bei Verspätungen über 60 Minuten, um zusätzliche Gebühren zu vermeiden. Wir sind flexibel bei Umbuchungen."
-    },
-    {
       icon: <Car className="w-12 h-12 text-blue-600" />,
-      title: "3. Übergabe & Parken",
+      title: "2. Übergabe & Parken",
       description: "Nach kurzer Übergabe Protokoll (ca. 5 Min.) übernimmt unser Fahrer Ihr Auto und parkt es sicher. Sie können direkt zum Check-In gehen."
     },
     {
       icon: <Plane className="w-12 h-12 text-blue-600" />,
-      title: "4. Rückgabe",
+      title: "3. Rückgabe",
       description: "Bei der Rückkehr rufen Sie uns nach der Landung an. Wir bringen Ihr Fahrzeug zum Terminal, wo Sie es nach Gepäckerhalt in Empfang nehmen können."
+    },
+    {
+      icon: <Calendar className="w-12 h-12 text-blue-600" />,
+      title: "4. Änderungen & Verspätungen",
+      description: "Informieren Sie uns telefonisch bei allen Änderungen oder bei Verspätungen über 60 Minuten. Wir sind flexibel bei Umbuchungen."
     }
   ];
 

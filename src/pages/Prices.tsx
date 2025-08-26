@@ -74,7 +74,7 @@ const Prices = () => {
                   </thead>
                   </table>
 
-                  <div className="max-h-[400px] overflow-y-auto">
+                  <div className="max-h-[430px] overflow-y-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <tbody className="bg-white divide-y divide-gray-200">
                         {parkingPrices.map((item) => (
@@ -115,6 +115,14 @@ const Prices = () => {
                     <span className="text-gray-900 font-medium">{service.price} €</span>
                   </div>
                 ))}
+              </div>
+
+              <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-6">Nachtzuschlag</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-gray-700">22:00 - 06:00 Uhr</span>
+                  <span className="text-gray-900 font-medium">25 €</span>
+                </div>
               </div>
             </div>
           </div>

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Car, Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -21,15 +20,15 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-300">+49 172 6935941</span>
+                <a href="tel:+491726935941" className="text-gray-300">+49 172 6935941</a>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-300">info@parkbereit.de</span>
+                <a href="mailto:info@parkbereit.de" className="text-gray-300">info@parkbereit.de</a>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-300">Düsseldorfer Str. 12 - 65760 Eschborn</span>
+                <a href='https://www.google.com/maps/place/Düsseldorfer+Str.+12,+65760+Eschborn' target="_blank" rel="noopener noreferrer" className="text-gray-300">Düsseldorfer Str. 12 - 65760 Eschborn</a>
               </div>
             </div>
           </div>

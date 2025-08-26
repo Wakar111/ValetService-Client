@@ -233,7 +233,7 @@ const Booking = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     <Calendar className="inline h-4 w-4 mr-1" />
                     <Clock className="inline h-4 w-4 mr-1" />
-                    Abflugdatum und -zeit *
+                    Abflugdatum und -zeit am Flughafen *
                   </label>
                   <DatePicker
                     selected={formData.departureDateTime}
@@ -264,7 +264,7 @@ const Booking = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     <Calendar className="inline h-4 w-4 mr-1" />
                     <Clock className="inline h-4 w-4 mr-1" />
-                    Rückflugdatum und -zeit *
+                    Rückflugdatum und -zeit am Flughafen *
                   </label>
                   <DatePicker
                     selected={formData.returnDateTime}
