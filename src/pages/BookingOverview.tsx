@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { services } from '../constants/services';
 
 interface BookingData {
   name: string;
@@ -19,6 +20,7 @@ interface BookingData {
   additionalServices: string[];
   parkingDays: number;
   totalPrice: number;
+  hasNightSurcharge: boolean;
 }
 
 const BookingOverview: FC = () => {
@@ -110,9 +112,15 @@ const BookingOverview: FC = () => {
             <div className="space-y-6 mb-8">
               <h3 className="text-xl font-semibold text-gray-900">Zusätzliche Leistungen</h3>
               <ul className="list-disc list-inside space-y-2">
-                {bookingData.additionalServices.map((service, index) => (
-                  <li key={index} className="text-gray-700">{service}</li>
-                ))}
+                {bookingData.additionalServices.map((service, index) => {
+                  const servicePrice = services.find(s => s.name === service)?.price || 0;
+                  return (
+                    <li key={index} className="text-gray-700 flex justify-between items-center">
+                      <span>{service}</span>
+                      <span className="font-medium">{servicePrice} €</span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
@@ -161,22 +169,28 @@ const BookingOverview: FC = () => {
 
           {/* Total Price */}
           <div className="border-t border-gray-200 pt-6 mt-8 space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-lg text-gray-900">{Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT) > 0 ? 'Ursprünglicher Preis' : 'Gesamtbetrag'}</span>
-              <span className="text-lg text-gray-600">{bookingData.totalPrice.toFixed(2)} €</span>
+            {bookingData.hasNightSurcharge && (
+              <div className="flex justify-between items-center">
+                <span className="text-lg text-gray-900">Nachtzuschlag (22:00 - 06:00 Uhr)</span>
+                <span className="text-lg text-gray-600">25.00 €</span>
+              </div>
+            )}
+            <div className="flex justify-between items-center pt-3 border-t">
+              <span className="text-lg font-medium text-gray-900">Zwischensumme</span>
+              <span className="text-lg font-medium text-gray-900">{(bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)).toFixed(2)} €</span>
             </div>
             {Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT) > 0 && (
               <>
                 <div className="flex justify-between items-center text-green-600">
                   <span className="text-lg">Online-Buchungsrabatt ({(Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT) * 100)}%)</span>
-                  <span className="text-lg">-{(bookingData.totalPrice * Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
+                  <span className="text-lg">-{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
                 </div>
                 <div className="space-y-1">
 
                 
                 <div className="flex justify-between items-center pt-3 border-t">
                   <span className="text-xl font-semibold text-gray-900">Gesamtbetrag</span>
-                  <span className="text-2xl font-bold text-blue-600">{(bookingData.totalPrice * (1 - Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</span>
+                  <span className="text-2xl font-bold text-blue-600">{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * (1 - Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</span>
                 </div>
                 <p className="text-sm text-gray-500 text-right">* inkl. 19% MwSt.</p>
                 </div>

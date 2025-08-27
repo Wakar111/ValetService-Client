@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { services } from '../constants/services';
 import { Calendar, Clock, User, Mail, Phone, Car, ChevronUp, ChevronDown } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,14 +8,6 @@ import './Booking.css';
 import { de } from 'date-fns/locale';
 
 const Booking = () => {
-  const services = [
-    { name: 'Auto Außenwäsche', price: 25 },
-    { name: 'Auto Innenwäsche', price: 45 },
-    {name: 'Auto Innen- und Außenwäsche', price: 60},
-    { name: 'Auto Innenwäsche Bus/SUV', price: 80 },
-    { name: 'Tankservice', price: 20 },
-    { name: 'E-WALLBOX', price: 40 }
-  ];
 
   const parkingPrices = [
     { days: 1, price: 48 }, { days: 2, price: 50 }, { days: 3, price: 53 },
@@ -109,7 +102,11 @@ const Booking = () => {
     const servicesTotal = formData.additionalServices.reduce((total, service) => 
       total + (services.find(s => s.name === service)?.price || 0), 0
     );
-    return parkingPrice + servicesTotal;
+    const departureHour = formData.departureDateTime?.getHours() || 0;
+    const returnHour = formData.returnDateTime?.getHours() || 0;
+    const hasNightSurcharge = departureHour >= 22 || departureHour < 6 || returnHour >= 22 || returnHour < 6;
+    const nightSurcharge = hasNightSurcharge ? 25 : 0;
+    return parkingPrice + servicesTotal + nightSurcharge;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -128,10 +125,15 @@ const Booking = () => {
       return;
     }
 
+    const departureHour = formData.departureDateTime.getHours();
+    const returnHour = formData.returnDateTime.getHours();
+    const hasNightSurcharge = departureHour >= 22 || departureHour < 6 || returnHour >= 22 || returnHour < 6;
+
     const bookingData = {
       ...formData,
       parkingDays,
-      totalPrice: calculateTotal()
+      totalPrice: calculateTotal(),
+      hasNightSurcharge
     };
 
     window.scrollTo(0, 0);
@@ -415,6 +417,12 @@ const Booking = () => {
                     ? parkingPrices.find(p => p.days === days)?.price
                     : null;
 
+                  // Check if either departure or return time is between 22:00 and 06:00
+                  const departureHour = formData.departureDateTime.getHours();
+                  const returnHour = formData.returnDateTime.getHours();
+                  const hasNightSurcharge = departureHour >= 22 || departureHour < 6 || returnHour >= 22 || returnHour < 6;
+                  const nightSurcharge = hasNightSurcharge ? 25 : 0;
+
                   // Calculate additional services total
                   const additionalServicesTotal = formData.additionalServices.reduce((total, serviceName) => {
                     const service = services.find(s => s.name === serviceName);
@@ -436,6 +444,13 @@ const Booking = () => {
                       ) : (
                         <div className="text-gray-600 italic">
                           * Für Buchungen über 30 Tage kontaktieren Sie uns bitte für ein individuelles Angebot
+                        </div>
+                      )}
+
+                      {hasNightSurcharge && (
+                        <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                          <span className="text-gray-600">Nachtzuschlag (An-/Abreise 22:00 - 06:00 Uhr):</span>
+                          <span className="font-medium">{nightSurcharge} €</span>
                         </div>
                       )}
 
@@ -464,7 +479,7 @@ const Booking = () => {
                         <div className="space-y-1">
                           <div className="flex justify-between items-center py-3 border-t-2 border-gray-300 text-lg font-semibold">
                             <span>Gesamtpreis:</span>
-                            <span>{parkingPrice + additionalServicesTotal} €</span>
+                            <span>{parkingPrice + additionalServicesTotal + nightSurcharge} €</span>
                           </div>
                           <p className="text-sm text-gray-500 text-right">* inkl. 19% MwSt.</p>
                         </div>
