@@ -47,11 +47,18 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Information</h4>
             <ul className="space-y-2 text-gray-300">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Über uns</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">AGB</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Datenschutz</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Impressum</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">FAQ</a></li>
+              <li><a href="/about" className="hover:text-blue-400 transition-colors">Über uns</a></li>
+              <li><a href="/privacy" className="hover:text-blue-400 transition-colors">Datenschutz</a></li>
+              <li><a href="/imprint" className="hover:text-blue-400 transition-colors">Impressum</a></li>
+              <li>
+                <a
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); window.openCookieSettings && window.openCookieSettings(); }}
+                  className="hover:text-blue-400 transition-colors"
+                >
+                  Cookie-Einstellungen
+                </a>
+              </li>
             </ul>
           </div>
         </div>
