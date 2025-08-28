@@ -19,8 +19,8 @@ const Process = () => {
     },
     {
       icon: <Calendar className="w-12 h-12 text-blue-600" />,
-      title: "4. Änderungen & Verspätungen",
-      description: "Informieren Sie uns telefonisch bei allen Änderungen oder bei Verspätungen über 60 Minuten. Wir sind flexibel bei Umbuchungen."
+      title: "4. Änderungen & Stornierung",
+      description: "Informieren Sie uns telefonisch bei allen Änderungen - Wir sind flexibel bei Umbuchungen. Eine Stornierung innerhalb von 24 Stunden ist kostenfrei"
     }
   ];
 

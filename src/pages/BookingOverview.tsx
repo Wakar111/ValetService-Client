@@ -190,7 +190,7 @@ const BookingOverview: FC = () => {
                 
                 <div className="flex justify-between items-center pt-3 border-t">
                   <span className="text-xl font-semibold text-gray-900">Gesamtbetrag</span>
-                  <span className="text-2xl font-bold text-blue-600">{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * (1 - Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</span>
+                  <span className="text-2xl font-bold">{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * (1 - Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</span>
                 </div>
                 <p className="text-sm text-gray-500 text-right">* inkl. 19% MwSt.</p>
                 </div>
