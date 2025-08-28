@@ -28,6 +28,7 @@ const BookingOverview: FC = () => {
   const location = useLocation();
   const bookingData = location.state as BookingData;
   const [selectedPayment, setSelectedPayment] = useState<'cash' | 'paypal' | null>(null);
+  const [declarationChecked, setDeclarationChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -167,6 +168,23 @@ const BookingOverview: FC = () => {
             </div>
           </div>
 
+          {/* Declaration of Truth */}
+          <div className="mt-8">
+            <div className="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="declaration"
+                required
+                checked={declarationChecked}
+                onChange={(e) => setDeclarationChecked(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <label htmlFor="declaration" className="text-sm text-gray-600">
+              <span className="text-red-500">*</span> Ich stimme den Allgemeinen Geschäftsbedingungen zu und erkläre, dass alle in diesem Formular enthaltene Information vollständig und wahrheitsgemäß ausgefüllt wurde.
+              </label>
+            </div>
+          </div>
+
           {/* Total Price */}
           <div className="border-t border-gray-200 pt-6 mt-8 space-y-3">
             {bookingData.hasNightSurcharge && (
@@ -238,8 +256,8 @@ const BookingOverview: FC = () => {
                   setIsLoading(false);
                 }
               }}
-              disabled={!selectedPayment || isLoading || success}
-              className={`px-6 py-3 rounded-lg text-white transition-colors flex items-center space-x-2 ${selectedPayment && !isLoading && !success ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
+              disabled={!selectedPayment || isLoading || success || !declarationChecked}
+              className={`px-6 py-3 rounded-lg text-white transition-colors flex items-center space-x-2 ${selectedPayment && !isLoading && !success && declarationChecked ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
             >
               {isLoading ? (
                 <>
