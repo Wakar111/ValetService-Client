@@ -6,6 +6,8 @@ import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { services } from '../constants/services';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
 interface BookingData {
   name: string;
   lastname: string;
@@ -229,7 +231,7 @@ const BookingOverview: FC = () => {
                 setIsLoading(true);
                 setError('');
                 try {
-                  const response = await fetch('http://localhost:3001/api/booking/confirm', {
+                  const response = await fetch(`${API_URL}/api/booking/confirm`, {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
