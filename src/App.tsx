@@ -9,27 +9,40 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Imprint from './pages/Imprint';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Checkout from './pages/Checkout';
+
+const initialOptions = {
+  "clientId": import.meta.env.VITE_PAYPAL_CLIENT_ID, // store in .env
+  currency: "EUR",
+  intent: "capture",
+};
+
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/prices" element={<Prices />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/imprint" element={<Imprint />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          {/* Legacy redirect: /cookies -> /privacy */}
-          <Route path="/cookies" element={<Navigate to="/privacy" replace />} />
-          <Route path="/booking-overview" element={<BookingOverview />} />
-        </Routes>
-        <CookieBanner />
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <PayPalScriptProvider options={initialOptions}>
+
+      <BrowserRouter>
+        <div className="min-h-screen">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/prices" element={<Prices />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/imprint" element={<Imprint />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            {/* Legacy redirect: /cookies -> /privacy */}
+            <Route path="/cookies" element={<Navigate to="/privacy" replace />} />
+            <Route path="/booking-overview" element={<BookingOverview />} />
+          </Routes>
+          <CookieBanner />
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </PayPalScriptProvider>
   );
 }
 
