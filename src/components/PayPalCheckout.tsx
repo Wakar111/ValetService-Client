@@ -1,5 +1,14 @@
-import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
-import React from 'react';
+import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useState } from 'react';
+
+interface PayPalCheckoutProps {
+  amount: number;
+  bookingId?: string;
+  onSuccess?: () => void;
+  onError?: (error: any) => void;
+  onCancel?: () => void;
+  className?: string;
+}
 
 interface PayPalErrorResponse {
   message: string;
@@ -14,7 +23,15 @@ interface PayPalCaptureResponse {
   details: Record<string, unknown>;
 }
 
-const Checkout: React.FC = () => {
+export const PayPalCheckout = ({
+  amount,
+  onSuccess,
+  onError,
+  onCancel,
+  className
+}: PayPalCheckoutProps) => {
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handlePaymentError = (err: any) => {
     console.error('Payment error:', err);
     if (err.message?.includes('insufficient')) {
@@ -22,6 +39,7 @@ const Checkout: React.FC = () => {
     } else {
       alert('Payment failed: ' + (err.message || 'Please try again'));
     }
+    onError?.(err);
   };
 
   const createPayPalOrder = async () => {
@@ -30,8 +48,8 @@ const Checkout: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          bookingId: 'BOOKING_ID', // TODO: Get from booking context/state
-          amount: 40.00
+          bookingId: 'BOOKING_ID',
+          amount
         })
       });
       
@@ -71,40 +89,41 @@ const Checkout: React.FC = () => {
   };
 
   return (
-    <div className="py-40">
-      <PayPalScriptProvider
-        options={{
-          clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || '',
-          currency: 'EUR',
-          intent: 'capture',
-          components: 'buttons'
+    <div style={{ width: '200px' }} className={className}>
+      <PayPalButtons
+        style={{
+          color: "gold",
+          layout: "horizontal",
+          shape: "rect",
+          height: 55,
+          tagline: false
         }}
-      >
-        <PayPalButtons
-        fundingSource="paypal"
-        style={{ layout: "vertical" }}
-        disabled={false}
-        forceReRender={[import.meta.env.VITE_PAYPAL_CLIENT_ID]}
+        disabled={isProcessing}
+        forceReRender={[amount]}
         createOrder={async () => {
-            return await createPayPalOrder();
+          setIsProcessing(true);
+          return await createPayPalOrder();
         }}
-
         onApprove={async (data) => {
-            try {
-                const details = await capturePayPalOrder(data.orderID);
-                console.log('Transaction completed:', details);
-                window.location.href = "/";
-            } catch (err) {
-                handlePaymentError(err);
-            }
+          try {
+            const details = await capturePayPalOrder(data.orderID);
+            console.log('Transaction completed:', details);
+            onSuccess?.();
+          } catch (err) {
+            handlePaymentError(err);
+          } finally {
+            setIsProcessing(false);
+          }
         }}
         onCancel={() => {
-            window.location.href = "/";
+          setIsProcessing(false);
+          onCancel?.();
+        }}
+        onError={(err) => {
+          setIsProcessing(false);
+          handlePaymentError(err);
         }}
       />
-      </PayPalScriptProvider>
     </div>
   );
 }
-
-export default Checkout;
