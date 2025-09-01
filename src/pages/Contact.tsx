@@ -39,7 +39,7 @@ const Contact = () => {
                     <a href="mailto:info@parkbereit.de" className="text-blue-600 hover:text-blue-800 text-lg font-medium">
                       info@parkbereit.de
                     </a>
-                    <p className="text-gray-600 text-sm">Antwort binnen 2 Stunden</p>
+                    <p className="text-gray-600 text-sm">Antwort binnen 1 Stunden</p>
                   </div>
                 </div>
                 
@@ -48,7 +48,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-gray-900">Standort</h4>
                     <p className="text-gray-800">Düsseldorfer Str. 12 - 65760 Eschborn</p>
-                    <p className="text-gray-600 text-sm">Parkplatz 10min vom Terminal entfernt</p>
+                    <p className="text-gray-600 text-sm">Parkplatz 10 Minuten vom Terminal entfernt</p>
                   </div>
                 </div>
                 

@@ -4,8 +4,8 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="col-span-1 md:col-span-7">
             <div className="flex items-center space-x-2 mb-4">
               <img src="/logo.jpeg" alt="Logo" className="h-16 w-16" />
               <div>
@@ -32,7 +32,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          
+        {/** 
           <div>
             <h4 className="text-lg font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-gray-300">
@@ -43,9 +43,9 @@ const Footer = () => {
               <li>Express-Abholung</li>
             </ul>
           </div>
-          
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Information</h4>
+          */}  
+          <div className="md:col-span-3 md:col-start-10">
+            <h4 className="text-lg font-semibold mb-4 text-blue-400">Information</h4>
             <ul className="space-y-2 text-gray-300">
               <li><a href="/about" className="hover:text-blue-400 transition-colors">Über uns</a></li>
               <li><a href="/privacy" className="hover:text-blue-400 transition-colors">Datenschutz</a></li>
@@ -64,13 +64,18 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
             <p className="text-gray-400 text-sm">
               © 2024 Parkbereit. Alle Rechte vorbehalten.
             </p>
-            <p className="text-gray-400 text-sm mt-2 md:mt-0">
-              Geöffnet 24/7 - 365 Tage im Jahr für Sie da
-            </p>
+            <span className="text-gray-400 text-sm">
+                Design by <a href="https://innovativ-tech.de/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors duration-200 text-blue-400">innovativ-tech</a>
+              </span>
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3">
+              <p className="text-gray-400 text-sm">
+                Geöffnet 24/7 - 365 Tage im Jahr für Sie da
+              </p>
+            </div>
           </div>
         </div>
       </div>
