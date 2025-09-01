@@ -65,52 +65,19 @@ const Contact = () => {
             </div>
           </div>
           
-          <div className="bg-gray-50 p-8 rounded-xl">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Schnellkontakt</h3>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Ihr Name"
-                />
+          <div className="bg-gray-200 p-3 md:p-6 rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-out hover:shadow-2xl hover:scale-[1.01] h-full group">
+            <div className="aspect-[4/3] w-full h-full relative rounded-lg overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
+              <img
+                src="/contact.jpg"
+                alt="Kontakt"
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out will-change-transform group-hover:scale-105 group-hover:brightness-110"
+                loading="lazy"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-20 transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100">
+                <p className="text-sm font-medium drop-shadow-lg">Ihr vertrauensvoller Partner für Valet-Service am Frankfurter Flughafen</p>
               </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">E-Mail</label>
-                <input
-                  type="email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="ihre.email@beispiel.de"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Telefon</label>
-                <input
-                  type="tel"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="+49 123 456 789"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Nachricht</label>
-                <textarea
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Ihre Nachricht an uns..."
-                ></textarea>
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Nachricht senden
-              </button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
