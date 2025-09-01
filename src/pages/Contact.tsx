@@ -65,9 +65,9 @@ const Contact = () => {
             </div>
           </div>
           
-          <div className="bg-gray-200 p-3 md:p-6 rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-out hover:shadow-2xl hover:scale-[1.01] h-full group">
+          <div className="bg-white p-3 md:p-6 rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-out hover:shadow-2xl hover:scale-[1.01] h-full group">
             <div className="aspect-[4/3] w-full h-full relative rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-0"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-300/50 via-blue-100/20 to-blue-400/5 z-10 transition-all duration-500 group-hover:opacity-0 group-hover:translate-y-2"></div>
               <img
                 src="/contact.jpg"
                 alt="Kontakt"
@@ -75,7 +75,7 @@ const Contact = () => {
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-20 transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100">
-                <p className="text-sm font-medium drop-shadow-lg">Ihr vertrauensvoller Partner für Valet-Service am Frankfurter Flughafen</p>
+                <p className="text-sm text-center font-medium drop-shadow-lg text-blue-500">Ihr vertrauensvoller Partner für Valet Service am Frankfurter Flughafen</p>
               </div>
             </div>
           </div>
