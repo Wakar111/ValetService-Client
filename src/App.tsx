@@ -10,7 +10,6 @@ import About from './pages/About';
 import Imprint from './pages/Imprint';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import Checkout from './pages/Checkout';
 
 const initialOptions = {
   "clientId": import.meta.env.VITE_PAYPAL_CLIENT_ID, // store in .env
@@ -28,7 +27,6 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/checkout" element={<Checkout />} />
             <Route path="/prices" element={<Prices />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />

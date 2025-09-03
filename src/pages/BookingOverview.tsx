@@ -1,9 +1,8 @@
-import type { FC } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
+import { useLocation } from 'react-router-dom';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
 import { services } from '../constants/services';
 import { PayPalCheckout } from '../components/PayPalCheckout';
 
@@ -26,7 +25,15 @@ interface BookingData {
   hasNightSurcharge: boolean;
 }
 
-const BookingOverview: FC = () => {
+const calculateSubtotal = (basePrice: number): number => {
+  return basePrice;
+};
+
+const calculateDiscountedPrice = (subtotal: number, discountRate: number): number => {
+  return subtotal * (1 - discountRate);
+};
+
+function BookingOverview() {
   const navigate = useNavigateAndScroll();
   const location = useLocation();
   const bookingData = location.state as BookingData;
@@ -231,20 +238,20 @@ const BookingOverview: FC = () => {
             )}
             <div className="flex justify-between items-center pt-3 border-t">
               <span className="text-lg font-medium text-gray-900">Zwischensumme</span>
-              <span className="text-lg font-medium text-gray-900">{(bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)).toFixed(2)} €</span>
+              <span className="text-lg font-medium text-gray-900">{calculateSubtotal(bookingData.totalPrice).toFixed(2)} €</span>
             </div>
             {Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT) > 0 && (
               <>
                 <div className="flex justify-between items-center text-green-600">
                   <span className="text-lg">Online-Buchungsrabatt ({(Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT) * 100)}%)</span>
-                  <span className="text-lg">-{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
+                  <span className="text-lg">-{(calculateSubtotal(bookingData.totalPrice) * Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
                 </div>
                 <div className="space-y-1">
 
                 
                 <div className="flex justify-between items-center pt-3 border-t">
                   <span className="text-xl font-semibold text-gray-900">Gesamtbetrag</span>
-                  <span className="text-2xl font-bold">{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * (1 - Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</span>
+                  <span className="text-2xl font-bold">{calculateDiscountedPrice(calculateSubtotal(bookingData.totalPrice), Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
                 </div>
                 <p className="text-sm text-gray-500 text-right">* inkl. 19% MwSt.</p>
                 </div>
@@ -283,7 +290,7 @@ const BookingOverview: FC = () => {
                 <div>
                   {!success && (
                     <PayPalCheckout
-                      amount={bookingData.totalPrice}
+                      amount={calculateDiscountedPrice(calculateSubtotal(bookingData.totalPrice), Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))}
                       onSuccess={async () => {
                         try {
                           await handleBookingConfirmation();
@@ -322,6 +329,7 @@ const BookingOverview: FC = () => {
       </div>
     </div>
   );
-};
+
+}
 
 export default BookingOverview;
