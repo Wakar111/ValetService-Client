@@ -40,7 +40,8 @@ function BookingOverview() {
   const [selectedPayment, setSelectedPayment] = useState<'cash' | 'paypal' | null>(null);
   const [declarationChecked, setDeclarationChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const handleBookingConfirmation = async () => {
@@ -63,12 +64,13 @@ function BookingOverview() {
     }
 
     setSuccess(true);
+    setIsProcessing(false);
     setTimeout(() => {
       navigate('/');
       window.scrollTo(0, 0);
     }, 5000);
   } catch (error) {
-    console.error('Error:', error);
+    //console.error('Error:', error);
     setError('Es gab ein Problem beim Senden der Buchungsbestätigung. Bitte versuchen Sie es später erneut.');
   } finally {
     setIsLoading(false);
@@ -288,23 +290,26 @@ function BookingOverview() {
                 </button>
               ) : selectedPayment === 'paypal' ? (
                 <div>
-                  {!success && (
+                  {!success && !isProcessing && (
                     <PayPalCheckout
                       amount={calculateDiscountedPrice(calculateSubtotal(bookingData.totalPrice), Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))}
                       onSuccess={async () => {
+                        setIsProcessing(true);
                         try {
                           await handleBookingConfirmation();
                         } catch (error) {
-                          console.error('Error sending confirmation:', error);
+                          //console.error('Error sending confirmation:', error);
                           setError('Die Zahlung war erfolgreich, aber es gab ein Problem beim Senden der Bestätigung.');
                         }
                       }}
                       onError={(error) => {
-                        console.error('PayPal error:', error);
+                        //console.error('PayPal error:', error);
                         setError('Es gab ein Problem mit PayPal. Bitte versuchen Sie es später erneut.');
+                        setIsProcessing(false);
                       }}
                       onCancel={() => {
                         setError('Die PayPal-Zahlung wurde abgebrochen.');
+                        setIsProcessing(false);
                       }}
                       className={declarationChecked ? '' : 'opacity-50 pointer-events-none'}
                     />

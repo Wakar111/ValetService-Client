@@ -27,7 +27,7 @@ export const PayPalCheckout = ({
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handlePaymentError = (err: any) => {
-    console.error('Payment error:', err);
+    //console.error('Payment error:', err);
     if (err.message?.includes('insufficient')) {
       alert('Insufficient funds. Please use a different payment method.');
     } else {
@@ -59,7 +59,7 @@ export const PayPalCheckout = ({
         bookingId
       });
     } catch (error) {
-      console.error('Error capturing PayPal payment:', error);
+      //console.error('Error capturing PayPal payment:', error);
       onError?.(error as Error);
     } finally {
       setIsProcessing(false);

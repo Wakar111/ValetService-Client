@@ -12,9 +12,10 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const initialOptions = {
-  "clientId": import.meta.env.VITE_PAYPAL_CLIENT_ID, // store in .env
+  clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
   currency: "EUR",
   intent: "capture",
+  components: "buttons"
 };
 
 
