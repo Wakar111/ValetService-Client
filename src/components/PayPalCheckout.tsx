@@ -4,27 +4,21 @@ import { useState } from 'react';
 interface PayPalCheckoutProps {
   amount: number;
   bookingId?: string;
-  onSuccess?: () => void;
+  onSuccess?: (response: PayPalSuccessResponse) => void;
   onError?: (error: any) => void;
   onCancel?: () => void;
   className?: string;
 }
 
-interface PayPalErrorResponse {
-  message: string;
-}
-
-interface PayPalOrderResponse {
-  orderId: string;
-}
-
-interface PayPalCaptureResponse {
+interface PayPalSuccessResponse {
   status: string;
-  details: Record<string, unknown>;
+  orderId: string;
+  bookingId: string;
 }
 
 export const PayPalCheckout = ({
   amount,
+  bookingId = 'default',
   onSuccess,
   onError,
   onCancel,
@@ -42,55 +36,43 @@ export const PayPalCheckout = ({
     onError?.(err);
   };
 
-  const createPayPalOrder = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/paypal/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          bookingId: 'BOOKING_ID',
-          amount
-        })
-      });
-      
-      const errorText = await response.text();
-      const data = JSON.parse(errorText);
-      if (!response.ok) {
-        const errorData = data as PayPalErrorResponse;
-        throw new Error(errorData.message || 'Failed to create order');
-      }
-      const orderData = data as PayPalOrderResponse;
-      return orderData.orderId;
-    } catch (err) {
-      handlePaymentError(err);
-      throw err;
-    }
+  const createOrder = () => {
+    return {
+      intent: 'CAPTURE' as const,
+      purchase_units: [{
+        amount: {
+          value: amount.toString(),
+          currency_code: 'EUR'
+        },
+        description: `Booking ID: ${bookingId}`
+      }]
+    };
   };
 
-  const capturePayPalOrder = async (orderID: string) => {
+  const onApprove = async (_data: any, actions: any) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/paypal/capture-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderID })
+      setIsProcessing(true);
+      const order = await actions.order.capture();
+      onSuccess?.({ 
+        status: order.status, 
+        orderId: order.id,
+        bookingId
       });
-
-      const errorText = await response.text();
-      const data = JSON.parse(errorText);
-      if (!response.ok) {
-        const errorData = data as PayPalErrorResponse;
-        throw new Error(errorData.message || 'Failed to capture payment');
-      }
-      return data as PayPalCaptureResponse;
-    } catch (err) {
-      handlePaymentError(err);
-      throw err;
+    } catch (error) {
+      console.error('Error capturing PayPal payment:', error);
+      onError?.(error as Error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   return (
     <div style={{ width: '200px' }} className={className}>
       <PayPalButtons
+        createOrder={(_, actions) => actions.order.create(createOrder())}
+        onApprove={onApprove}
+        onError={handlePaymentError}
+        onCancel={onCancel}
         style={{
           color: "gold",
           layout: "horizontal",
@@ -100,29 +82,6 @@ export const PayPalCheckout = ({
         }}
         disabled={isProcessing}
         forceReRender={[amount]}
-        createOrder={async () => {
-          setIsProcessing(true);
-          return await createPayPalOrder();
-        }}
-        onApprove={async (data) => {
-          try {
-            const details = await capturePayPalOrder(data.orderID);
-            console.log('Transaction completed:', details);
-            onSuccess?.();
-          } catch (err) {
-            handlePaymentError(err);
-          } finally {
-            setIsProcessing(false);
-          }
-        }}
-        onCancel={() => {
-          setIsProcessing(false);
-          onCancel?.();
-        }}
-        onError={(err) => {
-          setIsProcessing(false);
-          handlePaymentError(err);
-        }}
       />
     </div>
   );
