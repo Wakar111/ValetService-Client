@@ -1,10 +1,10 @@
-import type { FC } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
+import { useLocation } from 'react-router-dom';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
 import { services } from '../constants/services';
+import { PayPalCheckout } from '../components/PayPalCheckout';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
@@ -25,7 +25,15 @@ interface BookingData {
   hasNightSurcharge: boolean;
 }
 
-const BookingOverview: FC = () => {
+const calculateSubtotal = (basePrice: number): number => {
+  return basePrice;
+};
+
+const calculateDiscountedPrice = (subtotal: number, discountRate: number): number => {
+  return subtotal * (1 - discountRate);
+};
+
+function BookingOverview() {
   const navigate = useNavigateAndScroll();
   const location = useLocation();
   const bookingData = location.state as BookingData;
@@ -34,6 +42,39 @@ const BookingOverview: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const handleBookingConfirmation = async () => {
+  setIsLoading(true);
+  setError('');
+  try {
+    const response = await fetch(`${API_URL}/api/booking/confirm`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...bookingData,
+        paymentMethod: selectedPayment
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send booking confirmation');
+    }
+
+    setSuccess(true);
+    setTimeout(() => {
+      navigate('/');
+      window.scrollTo(0, 0);
+    }, 5000);
+  } catch (error) {
+    console.error('Error:', error);
+    setError('Es gab ein Problem beim Senden der Buchungsbestätigung. Bitte versuchen Sie es später erneut.');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   useEffect(() => {
     if (!bookingData) {
@@ -197,20 +238,20 @@ const BookingOverview: FC = () => {
             )}
             <div className="flex justify-between items-center pt-3 border-t">
               <span className="text-lg font-medium text-gray-900">Zwischensumme</span>
-              <span className="text-lg font-medium text-gray-900">{(bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)).toFixed(2)} €</span>
+              <span className="text-lg font-medium text-gray-900">{calculateSubtotal(bookingData.totalPrice).toFixed(2)} €</span>
             </div>
             {Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT) > 0 && (
               <>
                 <div className="flex justify-between items-center text-green-600">
                   <span className="text-lg">Online-Buchungsrabatt ({(Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT) * 100)}%)</span>
-                  <span className="text-lg">-{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
+                  <span className="text-lg">-{(calculateSubtotal(bookingData.totalPrice) * Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
                 </div>
                 <div className="space-y-1">
 
                 
                 <div className="flex justify-between items-center pt-3 border-t">
                   <span className="text-xl font-semibold text-gray-900">Gesamtbetrag</span>
-                  <span className="text-2xl font-bold">{((bookingData.totalPrice + (bookingData.hasNightSurcharge ? 25 : 0)) * (1 - Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))).toFixed(2)} €</span>
+                  <span className="text-2xl font-bold">{calculateDiscountedPrice(calculateSubtotal(bookingData.totalPrice), Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT)).toFixed(2)} €</span>
                 </div>
                 <p className="text-sm text-gray-500 text-right">* inkl. 19% MwSt.</p>
                 </div>
@@ -226,53 +267,51 @@ const BookingOverview: FC = () => {
             >
               Zurück zur Buchung
             </button>
-            <button
-              onClick={async () => {
-                setIsLoading(true);
-                setError('');
-                try {
-                  const response = await fetch(`${API_URL}/api/booking/confirm`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      ...bookingData,
-                      paymentMethod: selectedPayment
-                    })
-                  });
-
-                  if (!response.ok) {
-                    throw new Error('Failed to send booking confirmation');
-                  }
-
-                  setSuccess(true);
-                  setTimeout(() => {
-                    navigate('/');
-                    window.scrollTo(0, 0);
-                  }, 5000);
-                } catch (error) {
-                  console.error('Error:', error);
-                  setError('Es gab ein Problem beim Senden der Buchungsbestätigung. Bitte versuchen Sie es später erneut.');
-                } finally {
-                  setIsLoading(false);
-                }
-              }}
-              disabled={!selectedPayment || isLoading || success || !declarationChecked}
-              className={`px-6 py-3 rounded-lg text-white transition-colors flex items-center space-x-2 ${selectedPayment && !isLoading && !success && declarationChecked ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
-            >
-              {isLoading ? (
-                <>
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  <span>Wird gesendet...</span>
-                </>
-              ) : (
-                <span>Buchung bestätigen</span>
-              )}
-            </button>
+            <div className="flex justify-end">
+              {selectedPayment === 'cash' ? (
+                <button
+                  onClick={handleBookingConfirmation}
+                  disabled={isLoading || success || !declarationChecked}
+                  className={`px-6 py-3 rounded-lg text-white transition-colors flex items-center space-x-2 ${!isLoading && !success && declarationChecked ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
+                >
+                  {isLoading ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      <span>Wird gesendet...</span>
+                    </>
+                  ) : (
+                    <span>Buchung bestätigen</span>
+                  )}
+                </button>
+              ) : selectedPayment === 'paypal' ? (
+                <div>
+                  {!success && (
+                    <PayPalCheckout
+                      amount={calculateDiscountedPrice(calculateSubtotal(bookingData.totalPrice), Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT))}
+                      onSuccess={async () => {
+                        try {
+                          await handleBookingConfirmation();
+                        } catch (error) {
+                          console.error('Error sending confirmation:', error);
+                          setError('Die Zahlung war erfolgreich, aber es gab ein Problem beim Senden der Bestätigung.');
+                        }
+                      }}
+                      onError={(error) => {
+                        console.error('PayPal error:', error);
+                        setError('Es gab ein Problem mit PayPal. Bitte versuchen Sie es später erneut.');
+                      }}
+                      onCancel={() => {
+                        setError('Die PayPal-Zahlung wurde abgebrochen.');
+                      }}
+                      className={declarationChecked ? '' : 'opacity-50 pointer-events-none'}
+                    />
+                  )}
+                </div>
+              ) : null}
+            </div>
           </div>
           {error && (
             <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600">
@@ -290,6 +329,7 @@ const BookingOverview: FC = () => {
       </div>
     </div>
   );
-};
+
+}
 
 export default BookingOverview;
