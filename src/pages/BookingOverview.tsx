@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { parkingPrices } from '../constants/services';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
@@ -149,6 +150,10 @@ function BookingOverview() {
               <div>
                 <p className="text-sm text-gray-500">Parkdauer</p>
                 <p className="font-medium">{bookingData.parkingDays} Tage</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Parkpreis</p>
+                <p className="font-medium">{parkingPrices.find(p => p.days === bookingData.parkingDays)?.price || parkingPrices[parkingPrices.length - 1].price} €</p>
               </div>
             </div>
           </div>
