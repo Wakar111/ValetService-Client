@@ -121,7 +121,7 @@ const Prices = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
                   <span className="text-gray-700">22:00 - 06:00 Uhr</span>
-                  <span className="text-gray-900 font-medium">25 €</span>
+                  <span className="text-gray-900 font-medium">30 €</span>
                 </div>
               </div>
             </div>

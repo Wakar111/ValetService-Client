@@ -235,7 +235,7 @@ function BookingOverview() {
             {bookingData.hasNightSurcharge && (
               <div className="flex justify-between items-center">
                 <span className="text-lg text-gray-900">Nachtzuschlag (22:00 - 06:00 Uhr)</span>
-                <span className="text-lg text-gray-600">25.00 €</span>
+                <span className="text-lg text-gray-600">30.00 €</span>
               </div>
             )}
             <div className="flex justify-between items-center pt-3 border-t">

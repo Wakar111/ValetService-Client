@@ -105,7 +105,7 @@ const Booking = () => {
     const departureHour = formData.departureDateTime?.getHours() || 0;
     const returnHour = formData.returnDateTime?.getHours() || 0;
     const hasNightSurcharge = departureHour >= 22 || departureHour < 6 || returnHour >= 22 || returnHour < 6;
-    const nightSurcharge = hasNightSurcharge ? 25 : 0;
+    const nightSurcharge = hasNightSurcharge ? 30 : 0;
     return parkingPrice + servicesTotal + nightSurcharge;
   };
 
@@ -421,7 +421,7 @@ const Booking = () => {
                   const departureHour = formData.departureDateTime.getHours();
                   const returnHour = formData.returnDateTime.getHours();
                   const hasNightSurcharge = departureHour >= 22 || departureHour < 6 || returnHour >= 22 || returnHour < 6;
-                  const nightSurcharge = hasNightSurcharge ? 25 : 0;
+                  const nightSurcharge = hasNightSurcharge ? 30 : 0;
 
                   // Calculate additional services total
                   const additionalServicesTotal = formData.additionalServices.reduce((total, serviceName) => {
