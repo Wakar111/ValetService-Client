@@ -1,51 +1,11 @@
 import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
-
+import { parkingPrices, services } from '../constants/services';
 const Prices = () => {
   const navigateAndScroll = useNavigateAndScroll();
-  const parkingPrices = [
-    { days: 1, price: 45 },
-    { days: 2, price: 48 },
-    { days: 3, price: 50 },
-    { days: 4, price: 55 },
-    { days: 5, price: 60 },
-    { days: 6, price: 66 },
-    { days: 7, price: 75 },
-    { days: 8, price: 78 },
-    { days: 9, price: 82 },
-    { days: 10, price: 84 },
-    { days: 11, price: 87 },
-    { days: 12, price: 90 },
-    { days: 13, price: 95 },
-    { days: 14, price: 105},
-    { days: 15, price: 110 },
-    { days: 16, price: 113 },
-    { days: 17, price: 118 },
-    { days: 18, price: 120 },
-    { days: 19, price: 125 },
-    { days: 20, price: 128 },
-    { days: 21, price: 130 },
-    { days: 22, price: 135 },
-    { days: 23, price: 140 },
-    { days: 24, price: 143 },
-    { days: 25, price: 146 },
-    { days: 26, price: 150 },
-    { days: 27, price: 155 },
-    { days: 28, price: 160 },
-    { days: 29, price: 165 },
-    { days: 30, price: 170 },
-  ];
 
-  const additionalServices = [
-    { name: 'Tankservice', price: 20 },
-    { name: 'E-WALLBOX', price: 40 },
-  ];
+  const additionalServices = services.filter(service => service.name !== 'Auto Innenwäsche Bus/SUV');
 
-  const carCareServices = [
-    { name: 'Auto Außenwäsche', price: 25 },
-    { name: 'Auto Innenwäsche', price: 45 },
-    { name: 'Auto Innen- und Außenwäsche', price: 60 },
-    { name: 'Auto Innenwäsche Bus/ SUV', price: 70 },
-  ];
+  const carCareServices = services.filter(service => service.name === 'Auto Innenwäsche Bus/SUV');
 
   return (
     <section id="prices" className="py-16 bg-gray-50 mt-40">
