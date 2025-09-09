@@ -42,7 +42,7 @@ const Hero = () => {
           
           <div className="mt-16">
             <a 
-              href="#booking" 
+              href="#ps-form-frame" 
               className="inline-block bg-blue-600 text-white px-10 py-4 rounded-lg text-xl font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Jetzt Buchen

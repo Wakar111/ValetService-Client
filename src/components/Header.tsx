@@ -35,8 +35,8 @@ const Header = () => {
               className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-colors duration-300"
             >Services</a>
             <a
-              href="/#booking"
-              onClick={(e) => handleScroll(e, '#booking')}
+              href="/#ps-form-frame"
+              onClick={(e) => handleScroll(e, '#ps-form-frame')}
               className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-colors duration-300"
             >Buchung</a>
             <a href="/contact" className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-colors">Kontakt</a>
@@ -76,8 +76,8 @@ const Header = () => {
                 className="text-xl font-semibold text-gray-300 hover:text-blue-400 transition-colors duration-300"
               >Services</a>
               <a
-                href="/#booking"
-                onClick={(e) => handleScroll(e, '#booking')}
+                href="/#ps-form-frame"
+                onClick={(e) => handleScroll(e, '#ps-form-frame')}
                 className="text-xl font-semibold text-gray-300 hover:text-blue-400 transition-colors duration-300"
               >Buchung</a>
               <a 
