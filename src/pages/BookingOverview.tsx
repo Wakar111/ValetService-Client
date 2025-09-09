@@ -4,6 +4,7 @@ import { parkingPrices } from '../constants/services';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { useNavigateAndScroll } from '../hooks/useNavigateAndScroll';
+import { useNavigate } from 'react-router-dom';
 import { services } from '../constants/services';
 import { PayPalCheckout } from '../components/PayPalCheckout';
 
@@ -35,7 +36,8 @@ const calculateDiscountedPrice = (subtotal: number, discountRate: number): numbe
 };
 
 function BookingOverview() {
-  const navigate = useNavigateAndScroll();
+  const navigateAndScroll = useNavigateAndScroll();
+  const navigate = useNavigate();
   const location = useLocation();
   const bookingData = location.state as BookingData;
   const [selectedPayment, setSelectedPayment] = useState<'cash' | 'paypal' | null>(null);
@@ -64,12 +66,22 @@ function BookingOverview() {
       throw new Error('Failed to send booking confirmation');
     }
 
+    const data = await response.json();
+
     setSuccess(true);
     setIsProcessing(false);
-    setTimeout(() => {
-      navigate('/');
-      window.scrollTo(0, 0);
-    }, 5000);
+    
+    const finalPrice = calculateDiscountedPrice(calculateSubtotal(bookingData.totalPrice), Number(import.meta.env.VITE_ONLINE_BOOKING_DISCOUNT));
+    // Navigate to thank you page with booking details
+    navigate('/danke', {
+      state: {
+        name: bookingData.name,
+        lastname: bookingData.lastname,
+        email: bookingData.email,
+        bookingNumber: data.bookingNumber,
+        totalPrice: finalPrice
+      }
+    });
   } catch (error) {
     //console.error('Error:', error);
     setError('Es gab ein Problem beim Senden der Buchungsbestätigung. Bitte versuchen Sie es später erneut.');
@@ -269,7 +281,7 @@ function BookingOverview() {
           {/* Actions */}
           <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
             <button
-              onClick={() => navigate('/', '#booking')}
+              onClick={() => navigateAndScroll('/', '#booking')}
               className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
             >
               Zurück zur Buchung
@@ -307,7 +319,7 @@ function BookingOverview() {
                           setError('Die Zahlung war erfolgreich, aber es gab ein Problem beim Senden der Bestätigung.');
                         }
                       }}
-                      onError={(error) => {
+                      onError={() => {
                         //console.error('PayPal error:', error);
                         setError('Es gab ein Problem mit PayPal. Bitte versuchen Sie es später erneut.');
                         setIsProcessing(false);

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import BookingOverview from './pages/BookingOverview';
+import ThankYou from './pages/ThankYou';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import CookieBanner from './components/CookieBanner';
@@ -36,6 +37,7 @@ function App() {
             {/* Legacy redirect: /cookies -> /privacy */}
             <Route path="/cookies" element={<Navigate to="/privacy" replace />} />
             <Route path="/booking-overview" element={<BookingOverview />} />
+            <Route path="/danke" element={<ThankYou />} />
           </Routes>
           <CookieBanner />
           <Footer />
