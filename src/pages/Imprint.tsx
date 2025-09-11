@@ -39,7 +39,7 @@ export default function Imprint() {
             <h2 className="text-lg font-semibold mb-2 text-blue-400">Umsatzsteuer-ID</h2>
             <div className="bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-700 shadow-lg">
               <p className="mb-2">Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:</p>
-              <p>Die USt-IdNr. wurde beantragt und wird nach Erteilung hier veröffentlicht.</p>
+              <p>USt-IdNr.: DE363568563</p>
             </div>
           </section>
           </div>
